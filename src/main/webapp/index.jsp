@@ -122,7 +122,7 @@
         <li>git clone "리모트url" : 리모트 저장소의 main 가지를 다운</li>
         <li>이클립스나 intelliJ는 프로젝트 import를 해야 사용가능하다.</li>
         <li>이클립스 : import > maven > Existing maven project</li>
-        <li>intelliJ : 1. 모듈 "폴더명" 빌드 or 2. 모듈 > + > 모듈가져오기 > 프로젝트 선택 > 외부모듈에서 maven 선택</li>
+        <li>intelliJ : 1. pom.xml > + maven 모듈 추가 or 2. 모듈 > + > 모듈가져오기 > 프로젝트 선택 > 외부모듈에서 maven 선택</li>
         <li>자바 프로젝트는 보통 gitignore 설정으로 class(빌드)를 제외하고 저장소 올리기 때문에 처음 clone할 때 jdk 설정을 해야한다.</li>
         <li>maven 종속성 추가 : pom.xml 에서 maven > 새로고침 (import할때 안될 수도 있어서..)</li>
         <li>톰캣의 구성편집에서 실행할 모듈을(war exploded : 메이븐 웹앱 배포하는 웹앱압축파일) 추가 </li>
