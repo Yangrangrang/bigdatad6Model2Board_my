@@ -7,10 +7,10 @@ import com.bd6.board.dto.UserDto;
 
 import java.util.List;
 
-public class UserServiceImp implements  UserService{
+public class UserServiceImp implements UserService{
     private UserDao userDao;
-    public UserServiceImp() throws Exception {
-        this.userDao=new UserDaoImp();
+    public UserServiceImp() throws Exception{
+        this.userDao = new UserDaoImp();
     }
 
     @Override
@@ -40,9 +40,9 @@ public class UserServiceImp implements  UserService{
 
     @Override
     public List<UserDto> list(PagingDto paging) throws Exception {
-        List<UserDto> list=null;
-        list=userDao.findPaging(paging);
-        int count=userDao.count(paging);
+        List<UserDto> list = null;
+        list = userDao.findPaging(paging);
+        int count = userDao.count(paging);
         paging.setTotalRows(count);
 
         return list;
@@ -54,7 +54,7 @@ public class UserServiceImp implements  UserService{
     }
 
     @Override
-    public int idCheck(String id) throws Exception {
+    public int idcheck(String id) throws Exception {
         return 0;
     }
 }
