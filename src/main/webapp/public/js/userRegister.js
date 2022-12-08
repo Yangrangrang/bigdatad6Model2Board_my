@@ -1,46 +1,56 @@
 const registerForm = document.forms["registerForm"];
-registerForm["userId"].addEventListener("change",(e)=>{
+registerForm.onsubmit = async function (e){
+    let check = false;
+    e.preventDefault();
+    check = await userIdCheck();
+    if (check){
+        registerForm.submit();
+    }
+}
+
+registerForm["userId"].addEventListener("change",userIdCheck);
     // console.log(this.value);
     // let val = e.target.value;
-function userIdCheck(){
-    let check =false;
+async function userIdCheck(){
     let val = registerForm["userId"].value;
-    console.log(val)
     // 1. 길이가 4이상
     // 2. ajax로 userid가 저장되어 있는 지 확인
     if(val.length >= 4){
-        loadIdCheck(val)?.then((jsonObj)=>{
+        let url = "idCheck.do?userId="+val;
+        let resp = await fetch(url);
+        if (resp.status == 200) {
+            const jsonObj = await resp.json();
             if(jsonObj.idCheck === 1){ //존재하는 아이디
-                registerForm["userId"].classList.remove("is-valid");
-                registerForm["userId"].classList.add("is-invalid");
-                idInvalidMsg.innerText = "이미 사용중인 아이디 입니다.";
+                setInvalid(userI,idInvalidMsg,"이미 사용중인 아이디 입니다.");
+                return false;
             } else {
-                check = true;
-                registerForm["userId"].classList.remove("is-invalid");
-                registerForm["userId"].classList.add("is-valid");
+                setValid();
+                return true;
             }
-        })
-
+        }else  if (resp.status === 400){
+            ssetInvalid(userI,idInvalidMsg,"잘못된 요청입니다.");
+            return false;
+        } else if (resp.status === 500){
+            setInvalid(userI,idInvalidMsg,"서버오류 다시시도");
+            return false;
+        }
     } else {
-        check=false;
-        registerForm["userId"].classList.remove("is-valid");
-        registerForm["userId"].classList.add("is-invalid");
-        idInvalidMsg.innerText = "4자리 이상 입력";
+        setInvalid(userI,idInvalidMsg,"4자리 이상 입력");
+        return false;   //new Promice (false
     }
-    return check;
 }
-async function loadIdCheck(id){
-    let url = "idCheck.do?userId=" + id;
-    let response = await fetch(url);
-    if (response.status === 200){
-        let jsonObj =await response.json();
-        return jsonObj;
-    } else if (response.status === 400) {
-        alert("잘못된 접근 입니다.")
-    } else if (response.status === 500) {
-        alert("서버오류! 다시시도")
+function setValid(name,msgNode,msg){
+    registerForm[name].classList.remove("is-invalid");
+    registerForm[name].classList.add("is-valid");
+    if (msgNode != null){
+        msgNode.innerText = msg;
     }
+}
+function setInvalid(name,msgNode,msg){
+    registerForm[name].classList.remove("is-valid");
+    registerForm[name].classList.add("is-invalid");
+    msgNode.innerText = msg;
+}
 
-}
-});
+
 
