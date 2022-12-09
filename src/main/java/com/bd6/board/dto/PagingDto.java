@@ -22,6 +22,14 @@ public class PagingDto {
     private int endPage;
     private  String queryString;
 
+    public PagingDto(int page,int rows, String orderField, String direct){
+        this.page = page;
+        this.rows = rows;
+        this.orderField = orderField;
+        this.direct = direct;
+        this.startPage = (page-1)*rows;
+    }
+
     public void setQueryString(Map<String, String[]> queryMap) {
         // {name : [val1, val2..], boardNo=[1],hobby=["낚시","그림"]}
         // ?hobby=낚시&hobby=그림
@@ -36,14 +44,6 @@ public class PagingDto {
         this.queryString = queryString.toString();
     }
 
-    public PagingDto(int page, int rows, String orderField, String direct) {
-        this.page = page;
-        this.rows = rows;
-        this.orderField = orderField;
-        this.direct = direct;
-        this.startRow=(page-1)*rows;
-    }
-
     public void setTotalRows(int totalRows) {
         this.totalRows = totalRows;
         this.totalPages=totalRows/rows+((totalRows%rows>0)?1:0);
@@ -55,8 +55,9 @@ public class PagingDto {
             if(this.startPage<1)this.startPage=1;
             this.endPage=this.totalPages;
         }
-        this.next=(this.page==this.totalPages)?false:true;
-        this.prev=(this.page<1)?false:true;
-
+        this.next= this.page != this.totalPages;
+        this.prev= this.page > 1;
+        this.nextPage=this.page+1;
+        this.prevPage=this.page-1;
     }
 }

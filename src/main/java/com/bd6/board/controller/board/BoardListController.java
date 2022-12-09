@@ -35,7 +35,6 @@ public class BoardListController extends HttpServlet {
             paging = new PagingDto(page,rows,order,direct);
             boardService = new BoardServiceImp();
             boardList = boardService.list(paging);
-
         } catch (Exception e) {
             e.printStackTrace();
         }

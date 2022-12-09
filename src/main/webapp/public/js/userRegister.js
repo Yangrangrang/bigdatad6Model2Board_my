@@ -24,7 +24,7 @@ async function userIdCheck(){
                 setInvalid(userI,idInvalidMsg,"이미 사용중인 아이디 입니다.");
                 return false;
             } else {
-                setValid();
+                setValid("userId");
                 return true;
             }
         }else  if (resp.status === 400){

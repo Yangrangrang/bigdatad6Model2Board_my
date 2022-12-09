@@ -23,6 +23,16 @@ public class ReplySeviceImp implements ReplySevice{
     @Override
     public List<ReplyDto> boardDetailList(PagingDto paging, int boardNo) throws Exception {
         List<ReplyDto> replyList = replyDao.findByBoardNo(paging,boardNo);
+        for(ReplyDto reply : replyList){
+            List<ReplyDto> rrList = replyDao.fingByFkReplyNo(reply.getReplyNo());
+            reply.setReplyList(rrList);
+            if(rrList != null){
+                for (ReplyDto rr : rrList){
+                    List<ReplyDto> rrrList = replyDao.fingByFkReplyNo(rr.getFkReplyNo());
+                    rr.setReplyList(rrrList);
+                }
+            }
+        }
         int cnt = replyDao.countByBoard(boardNo);
         paging.setTotalRows(cnt);
         return replyList;

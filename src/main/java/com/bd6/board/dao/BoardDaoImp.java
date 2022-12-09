@@ -7,12 +7,11 @@ import com.bd6.board.dto.ReplyDto;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class BoardDaoImp implements BoardDao{
-    Connection conn  = null;
+    Connection conn;
     PreparedStatement pstmt;
     ResultSet rs;
 
@@ -76,7 +75,7 @@ public class BoardDaoImp implements BoardDao{
     public BoardDto findById(Integer id) throws Exception {
         // BoardDto.replyList(List<ReplyDto>)를 만들어서 조인하고 파싱하세요
         BoardDto board = null;
-        String sql ="SELECT  * FROM BOARD LEFT JOIN REPLY USING(board_no) WHERE board_no=?";
+        String sql ="SELECT  * FROM BOARD WHERE board_no=?";
         pstmt = conn.prepareStatement(sql);
         pstmt.setInt(1,id);
        rs = pstmt.executeQuery();

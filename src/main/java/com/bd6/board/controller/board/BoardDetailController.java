@@ -18,19 +18,17 @@ import java.util.List;
 
 @WebServlet("/board/detail.do")
 public class BoardDetailController extends HttpServlet {
-
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String page_str=req.getParameter("page");
         String rows_str=req.getParameter("rows");
         String order=req.getParameter("order");
         String direct=req.getParameter("direct");
-
         String boardNo_str = req.getParameter("boardNo");
         BoardDto board = null;
+        PagingDto paging =null;
         BoardService boardService = null;
         ReplySevice replySevice = null;
-        PagingDto paging =null;
         try {
             int page=(page_str!=null)?Integer.parseInt(page_str):1;
             int rows=(rows_str!=null)?Integer.parseInt(rows_str):5;
@@ -57,7 +55,7 @@ public class BoardDetailController extends HttpServlet {
         if (board != null){
             req.setAttribute("paging",paging);
             req.setAttribute("board",board);
-            req.getRequestDispatcher("WEB-INF/views/board/detail.jsp");
+            req.getRequestDispatcher("/WEB-INF/views/board/detail.jsp").forward(req,resp);
         } else {
             resp.sendRedirect("list.do");
         }

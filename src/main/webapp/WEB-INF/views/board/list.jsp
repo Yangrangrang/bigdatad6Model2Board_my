@@ -31,7 +31,7 @@
       </thead>
       <tbody>
         <%for (BoardDto board : boardList) {%>
-        <tr onclick="location.href='detail.do?boardNo='+<%=board.getBoardNo()%>림">
+        <tr onclick="location.href='detail.do?boardNo='+<%=board.getBoardNo()%>">
           <td><%=board.getBoardNo()%></td>
           <td><%=board.getTitle()%></td>
           <td><%=board.getPostTime()%></td>

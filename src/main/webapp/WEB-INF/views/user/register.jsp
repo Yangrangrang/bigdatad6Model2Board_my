@@ -13,10 +13,6 @@
     <script src="<%request.getContextPath();%>/public/js/userRegister.js"></script>
 </head>
 <style>
-    .form-floating .is-valid+label,
-    .form-floating .is-invalid+label {
-        display: none;
-    }
 </style>
 <body>
   <%@include file="/headerNav.jsp"%>
