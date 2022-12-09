@@ -62,7 +62,7 @@ public class BoardDaoImp implements BoardDao{
     @Override
     public int count(PagingDto paging) throws Exception {
         int count = 0;
-        String sql = "SELECT * COUNT(*) cnt FROM BOARD";
+        String sql = "SELECT COUNT(*) cnt FROM BOARD";
         pstmt = conn.prepareStatement(sql);
         rs = pstmt.executeQuery();
         if (rs.next()){

@@ -10,7 +10,7 @@ import java.util.List;
 public class BoardServiceImp implements BoardService{
     public BoardDao boardDao;
 
-    public BoardServiceImp(BoardDao boardDao) throws Exception {
+    public BoardServiceImp() throws Exception {
         this.boardDao = new BoardDaoImp();
     }
 
@@ -31,6 +31,11 @@ public class BoardServiceImp implements BoardService{
 
     @Override
     public List<BoardDto> list(PagingDto paging) throws Exception {
-        return null;
+        List<BoardDto> list = null;
+        int totalRows = 0;
+        list = boardDao.findPaging(paging);
+        totalRows = boardDao.count(paging);
+        paging.setTotalRows(totalRows);
+        return list;
     }
 }
