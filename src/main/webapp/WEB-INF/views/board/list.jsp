@@ -1,12 +1,6 @@
 <%@ page import="com.bd6.board.dto.BoardDto" %>
 <%@ page import="java.util.List" %>
-<%@ page import="com.bd6.board.dto.PagingDto" %><%--
-  Created by IntelliJ IDEA.
-  User: yanghanna
-  Date: 2022/12/08
-  Time: 3:10 PM
-  To change this template use File | Settings | File Templates.
---%>
+<%@ page import="com.bd6.board.dto.PagingDto" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -19,7 +13,12 @@
     PagingDto paging = (PagingDto)request.getAttribute("paging");
   %>
   <main class="container">
-    <h1 class="my-5">게시글 리스트</h1>
+    <h1 class="my-5 mb-4">게시글 리스트</h1>
+    <p>
+      <strong>총 레코드 수 : <%=paging.getTotalRows()%></strong>&nbsp;
+      <strong>총 페이지 수 : <%=paging.getTotalPages()%></strong>&nbsp;
+      <strong>출력되는 레코드 수 : <%=paging.getRows()%></strong>&nbsp;
+    </p>
     <table class="table table-bordered table-hover">
       <thead>
         <tr>
@@ -32,7 +31,7 @@
       </thead>
       <tbody>
         <%for (BoardDto board : boardList) {%>
-        <tr onclick="location.href='detail.do?boardNo='+<%=board.getBoardNo()%>">
+        <tr onclick="location.href='detail.do?boardNo='+<%=board.getBoardNo()%>림">
           <td><%=board.getBoardNo()%></td>
           <td><%=board.getTitle()%></td>
           <td><%=board.getPostTime()%></td>

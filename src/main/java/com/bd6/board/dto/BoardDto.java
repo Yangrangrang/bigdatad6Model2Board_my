@@ -3,6 +3,7 @@ package com.bd6.board.dto;
 import lombok.Data;
 
 import java.util.Date;
+import java.util.List;
 
 @Data
 public class BoardDto {
@@ -12,4 +13,5 @@ public class BoardDto {
     private Date postTime;
     private String userId;
     private int views;
+    private List<ReplyDto> replyList;
 }

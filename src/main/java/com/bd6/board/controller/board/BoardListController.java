@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.util.List;
 
 @WebServlet("/board/list.do")
-public class boardListController extends HttpServlet {
+public class BoardListController extends HttpServlet {
     // get방식은 공유가 되는 것
     // post방식은 공유하지 않는 것
 
@@ -38,13 +38,13 @@ public class boardListController extends HttpServlet {
 
         } catch (Exception e) {
             e.printStackTrace();
-            if(boardList == null){
-                resp.sendRedirect(req.getContextPath()+"/");
-            } else {
-                req.setAttribute("boardList",boardList);
-                req.setAttribute("paging",paging);
-                req.getRequestDispatcher("WEB-INF/views/board/list.jsp").forward(req, resp);
-            }
+        }
+        if(boardList == null){
+            resp.sendRedirect(req.getContextPath()+"/");
+        } else {
+            req.setAttribute("boardList",boardList);
+            req.setAttribute("paging",paging);
+            req.getRequestDispatcher("/WEB-INF/views/board/list.jsp").forward(req, resp);
         }
     }
 }

@@ -2,6 +2,7 @@ package com.bd6.board.dao;
 
 import com.bd6.board.dto.BoardDto;
 import com.bd6.board.dto.PagingDto;
+import com.bd6.board.dto.ReplyDto;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -73,7 +74,17 @@ public class BoardDaoImp implements BoardDao{
 
     @Override
     public BoardDto findById(Integer id) throws Exception {
-        return null;
+        // BoardDto.replyList(List<ReplyDto>)를 만들어서 조인하고 파싱하세요
+        BoardDto board = null;
+        String sql ="SELECT  * FROM BOARD LEFT JOIN REPLY USING(board_no) WHERE board_no=?";
+        pstmt = conn.prepareStatement(sql);
+        pstmt.setInt(1,id);
+       rs = pstmt.executeQuery();
+       int index = 0;
+       while (rs.next()){
+           board = rsParseBoardDto(rs); //rsParsBoardDto 가 객체를 하나 만들고
+       }
+        return board;
     }
 
     @Override

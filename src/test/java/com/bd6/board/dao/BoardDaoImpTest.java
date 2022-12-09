@@ -32,7 +32,8 @@ class BoardDaoImpTest {
     }
 
     @Test
-    void findById() {
+    void findById() throws Exception {
+        System.out.println(boardDao.findById(1));
     }
 
     @Test
