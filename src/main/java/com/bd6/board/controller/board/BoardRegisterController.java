@@ -1,5 +1,10 @@
 package com.bd6.board.controller.board;
 
+import com.bd6.board.dao.BoardImgDao;
+import com.bd6.board.dto.BoardDto;
+import com.bd6.board.dto.BoardImgDto;
+import com.bd6.board.service.BoardService;
+import com.bd6.board.service.BoardServiceImp;
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
@@ -11,7 +16,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.List;
 
 @WebServlet("/board/register.do")
 public class BoardRegisterController extends HttpServlet {
@@ -36,12 +43,21 @@ public class BoardRegisterController extends HttpServlet {
         // 콤캣 > 구성편집 > 톰캣인스텅스에 구성된 어플리케이션 배포(체크) : 정적파일은 war로 배포하기 전 어플의 소스를 사용 // 이클립스에서는 (server moduls )
         int fileSize = 1024*1024*1; // 1mb;
         // DefaultFileRenamePolicy() : 동일한 이름의 파일이 존재하면 (1~2~10) 수를 더해서 중복을 막는다.
+        int register = 0;   // 게시글 저장 성공 = 1 (+이미지 저장)
+        BoardDto board = null;
         try {
             MultipartRequest multiReq = new MultipartRequest(req,imgPath,fileSize,"UTF-8",new DefaultFileRenamePolicy());
             String title = multiReq.getParameter("title");
             String contents = multiReq.getParameter("contents");
             String userId = multiReq.getParameter("userId");
+
+            board = new BoardDto();
+            board.setTitle(title);
+            board.setContents(contents);
+            board.setUserId(userId);
+            List<BoardImgDto> boardImgList = new ArrayList<BoardImgDto>();
             Enumeration<String> fileNames = multiReq.getFileNames();
+            BoardService boardService = null;
             while (fileNames.hasMoreElements()){
                 String fileName = fileNames.nextElement();
                 File imgFile = multiReq.getFile(fileName);
@@ -55,11 +71,23 @@ public class BoardRegisterController extends HttpServlet {
                         String fileRename = "board_" + System.currentTimeMillis()+ "_" + random + "." +contentsTypes[1];
                         // 이렇게 하면 파일이 중복 될수 있음 그래서 뒤에 랜덤하게 숫자를 만들어서 넣어줌
                         imgFile.renameTo(new File(imgPath+"/"+fileRename));
+                        BoardImgDto boardImg = new BoardImgDto();
+                        boardImg.setImgPath((fileRename));
+                        boardImgList.add(boardImg);
                     }
                 }
-            }
+            } // img저장 끝
+            board.setBoardImgList(boardImgList);
+            boardService = new BoardServiceImp();
+            register = boardService.register(board);
         } catch (Exception e ){
             e.printStackTrace();
+        }
+        System.out.println("저장 :" + register);
+        if(register>0){ // 성공시 리스트
+            resp.sendRedirect("detail.do?boardNo=" + board.getBoardNo());
+        } else {    // 실패 시 다시 폼으로
+            resp.sendRedirect("register.do");
         }
     }
 }

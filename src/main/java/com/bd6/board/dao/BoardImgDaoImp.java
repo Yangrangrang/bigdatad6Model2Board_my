@@ -58,36 +58,6 @@ public class BoardImgDaoImp implements BoardImgDao{
     }
 
     @Override
-    public List<BoardImgDto> findAll() throws Exception {
-        return null;
-    }
-
-    @Override
-    public List<BoardImgDto> findPaging(PagingDto paging) throws Exception {
-        return null;
-    }
-
-    @Override
-    public int count(PagingDto paging) throws Exception {
-        return 0;
-    }
-
-    @Override
-    public BoardImgDto findById(Integer id) throws Exception {
-        return null;
-    }
-
-    @Override
-    public int deleteById(Integer id) throws Exception {
-        return 0;
-    }
-
-    @Override
-    public int updateById(BoardImgDto dto) throws Exception {
-        return 0;
-    }
-
-    @Override
     public int insert(BoardImgDto boardImg) throws Exception {
         int insert = 0;
         String sql ="INSERT INTO BOARD_IMG (board_no, img_path) VALUES (?,?)";

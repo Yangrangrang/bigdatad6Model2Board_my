@@ -4,7 +4,7 @@ import com.bd6.board.dto.BoardImgDto;
 
 import java.util.List;
 
-public interface BoardImgDao extends CRUD<BoardImgDto,Integer> {
+public interface BoardImgDao {
     //
     List<BoardImgDto> findByBoard(int boardNo) throws Exception;// 게시글 상세에서 이미지 리스트 출력
     int deleteByBoard(int boardNo) throws Exception; // 게시글이 참조하고 있는 자식(이미지)이 있는 경우 삭제
